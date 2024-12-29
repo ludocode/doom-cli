@@ -492,6 +492,8 @@ void R_Subsector (int num)
     int			count;
     seg_t*		line;
     subsector_t*	sub;
+
+    DOOMCLI_READ_INPUT();
 	
 #ifdef RANGECHECK
     if (num>=numsubsectors)

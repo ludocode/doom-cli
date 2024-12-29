@@ -181,6 +181,9 @@ wipe_doMelt
     {
 	for (i=0;i<width;i++)
 	{
+		if (!(i & 0x1f)) {
+			DOOMCLI_READ_INPUT();
+		}
 	    if (y[i]<0)
 	    {
 		y[i]++; done = false;

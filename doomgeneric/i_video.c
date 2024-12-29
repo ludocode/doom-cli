@@ -77,16 +77,9 @@ int usemouse = 0;
 
 
 #ifdef CMAP256
-
 boolean palette_changed;
-struct color colors[256];
-
-#else  // CMAP256
-
-static struct color colors[256];
-
-
 #endif  // CMAP256
+struct color colors[256];
 
 
 void I_GetEvent(void);
@@ -113,8 +106,10 @@ boolean screenvisible;
 // the values exceed the value of mouse_threshold, they are multiplied
 // by mouse_acceleration to increase the speed.
 
+#if 0 // mouse disabled for cli build
 float mouse_acceleration = 2.0;
 int mouse_threshold = 10;
+#endif
 
 // Gamma correction level to use
 
@@ -162,6 +157,11 @@ void cmap_to_fb(uint8_t * out, uint8_t * in, int in_pixels)
     for (i = 0; i < in_pixels; i++)
     {
         c = colors[*in];  /* R:8 G:8 B:8 format! */
+        out[0] = c.b;
+        out[1] = c.g;
+        out[2] = c.r;
+        out += 4;
+        #if 0
         r = (uint16_t)(c.r >> (8 - s_Fb.red.length));
         g = (uint16_t)(c.g >> (8 - s_Fb.green.length));
         b = (uint16_t)(c.b >> (8 - s_Fb.blue.length));
@@ -175,6 +175,7 @@ void cmap_to_fb(uint8_t * out, uint8_t * in, int in_pixels)
                 out++;
             }
         }
+        #endif
         in++;
     }
 }
@@ -265,6 +266,9 @@ void I_UpdateNoBlit (void)
 
 void I_FinishUpdate (void)
 {
+    DOOMCLI_READ_INPUT();
+
+#ifndef DOOM_CLI // doom-cli uses the I_VideoBuffer directly.
     int y;
     int x_offset, y_offset, x_offset_end;
     unsigned char *line_in, *line_out;
@@ -306,10 +310,11 @@ void I_FinishUpdate (void)
             //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
             cmap_to_fb((void*)line_out, (void*)line_in, SCREENWIDTH);
 #endif
-            line_out += (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel/8)) + x_offset_end;
+            line_out += (SCREENWIDTH * fb_scaling * (s_Fb.bits_per_pixel>>3)) + x_offset_end;
         }
         line_in += SCREENWIDTH;
     }
+#endif // DOOM_CLI
 
 	DG_DrawFrame();
 }

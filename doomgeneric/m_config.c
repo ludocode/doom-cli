@@ -1717,10 +1717,13 @@ static int ParseIntParameter(char *strparm)
 {
     int parm;
 
+abort();
+    #if 0 // TODO
     if (strparm[0] == '0' && strparm[1] == 'x')
         sscanf(strparm+2, "%x", &parm);
     else
         sscanf(strparm, "%i", &parm);
+    #endif
 
     return parm;
 }
@@ -1763,7 +1766,8 @@ static void SetVariable(default_t *def, char *value)
             break;
 
         case DEFAULT_FLOAT:
-            * (float *) def->location = (float) atof(value);
+            abort();
+            //* (float *) def->location = (float) atof(value);
             break;
     }
 }
@@ -2024,6 +2028,8 @@ const char *M_GetStrVariable(char *name)
 
 float M_GetFloatVariable(char *name)
 {
+abort();
+    #if 0
     default_t *variable;
 
     variable = GetDefaultForName(name);
@@ -2035,6 +2041,7 @@ float M_GetFloatVariable(char *name)
     }
 
     return *((float *) variable->location);
+    #endif
 }
 
 // Get the path to the default configuration dir to use, if NULL

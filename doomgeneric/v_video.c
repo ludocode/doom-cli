@@ -845,6 +845,7 @@ void V_ScreenShot(char *format)
 
 void V_DrawMouseSpeedBox(int speed)
 {
+#if 0 // mouse disabled for cli build
     extern int usemouse;
     int bgcolor, bordercolor, red, black, white, yellow;
     int box_x, box_y;
@@ -928,5 +929,6 @@ void V_DrawMouseSpeedBox(int speed)
 
     V_DrawVertLine(box_x + redline_x, box_y + 1,
                  MOUSE_SPEED_BOX_HEIGHT - 2, red);
+#endif
 }
 

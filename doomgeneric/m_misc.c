@@ -54,11 +54,13 @@
 
 void M_MakeDirectory(char *path)
 {
+    #ifndef __onramp__ // TODO implement mkdir on onramp
 #ifdef _WIN32
     mkdir(path);
 #else
     mkdir(path, 0755);
 #endif
+    #endif
 }
 
 // Check if a file exists
@@ -189,10 +191,13 @@ char *M_TempFile(char *s)
 
 boolean M_StrToInt(const char *str, int *result)
 {
+abort();
+    #if 0 // TODO
     return sscanf(str, " 0x%x", result) == 1
         || sscanf(str, " 0X%x", result) == 1
         || sscanf(str, " 0%o", result) == 1
         || sscanf(str, " %d", result) == 1;
+    #endif
 }
 
 void M_ExtractFileBase(char *path, char *dest)

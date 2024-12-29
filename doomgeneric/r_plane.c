@@ -385,6 +385,7 @@ void R_DrawPlanes (void)
 	if (pl->minx > pl->maxx)
 	    continue;
 
+    DOOMCLI_READ_INPUT();
 	
 	// sky flat
 	if (pl->picnum == skyflatnum)
@@ -399,6 +400,9 @@ void R_DrawPlanes (void)
 	    dc_texturemid = skytexturemid;
 	    for (x=pl->minx ; x <= pl->maxx ; x++)
 	    {
+		if (!(x & 0x1f)) {
+			DOOMCLI_READ_INPUT();
+		}
 		dc_yl = pl->top[x];
 		dc_yh = pl->bottom[x];
 
@@ -433,13 +437,18 @@ void R_DrawPlanes (void)
 		
 	stop = pl->maxx + 1;
 
+	DOOMCLI_READ_INPUT();
 	for (x=pl->minx ; x<= stop ; x++)
 	{
+		if (!(x & 0x1f)) {
+			DOOMCLI_READ_INPUT();
+		}
 	    R_MakeSpans(x,pl->top[x-1],
 			pl->bottom[x-1],
 			pl->top[x],
 			pl->bottom[x]);
 	}
+	DOOMCLI_READ_INPUT();
 	
         W_ReleaseLumpNum(lumpnum);
     }

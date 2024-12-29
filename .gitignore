@@ -1,4 +1,5 @@
 *.o
+*.od
 *.obj
 *.exe
 *.DS_Store
@@ -8,3 +9,7 @@
 .vs/
 Debug/
 Release/
+/doomgeneric/doom-cli
+/doomgeneric/doomgeneric
+/doomgeneric/doomgeneric.map
+doom.wad

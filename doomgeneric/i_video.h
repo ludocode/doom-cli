@@ -139,10 +139,10 @@ void I_EnableLoadingDisk(void);
 void I_EndRead (void);
 
 struct color {
-    uint32_t b:8;
-    uint32_t g:8;
-    uint32_t r:8;
-    uint32_t a:8;
+    uint8_t b;
+    uint8_t g;
+    uint8_t r;
+    uint8_t a;
 };
 
 
@@ -166,10 +166,8 @@ extern int show_diskicon;
 extern int diskicon_readbytes;
 
 #ifdef CMAP256
-
 extern boolean palette_changed;
-extern struct color colors[256];
-
 #endif  // CMAP256
+extern struct color colors[256];
 
 #endif

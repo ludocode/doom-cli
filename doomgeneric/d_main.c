@@ -182,6 +182,8 @@ void D_Display (void)
     boolean			wipe;
     boolean			redrawsbar;
 
+    DOOMCLI_READ_INPUT();
+
     if (nodrawers)
     	return;                    // for comparative timing / profiling
 		
@@ -206,6 +208,7 @@ void D_Display (void)
 
     if (gamestate == GS_LEVEL && gametic)
     	HU_Erase();
+    DOOMCLI_READ_INPUT();
     
     // do buffered drawing
     switch (gamestate)
@@ -235,6 +238,7 @@ void D_Display (void)
 		D_PageDrawer ();
 		break;
     }
+    DOOMCLI_READ_INPUT();
     
     // draw buffered stuff to screen
     I_UpdateNoBlit ();
@@ -256,6 +260,7 @@ void D_Display (void)
 		viewactivestate = false;        // view was not active
 		R_FillBackScreen ();    // draw the pattern into the back screen
     }
+    DOOMCLI_READ_INPUT();
 
     // see if the border needs to be updated to the screen
     if (gamestate == GS_LEVEL && !automapactive && scaledviewwidth != 320)
@@ -275,6 +280,7 @@ void D_Display (void)
 
         V_DrawMouseSpeedBox(testcontrols_mousespeed);
     }
+    DOOMCLI_READ_INPUT();
 
     menuactivestate = menuactive;
     viewactivestate = viewactive;
@@ -297,6 +303,7 @@ void D_Display (void)
     M_Drawer ();          // menu is drawn even on top of everything
     NetUpdate ();         // send out any new accumulation
 
+    DOOMCLI_READ_INPUT();
 
     // normal update
     if (!wipe)
@@ -304,6 +311,7 @@ void D_Display (void)
 	I_FinishUpdate ();              // page flip or blit buffer
 	return;
     }
+    DOOMCLI_READ_INPUT();
     
     // wipe update
     wipe_EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
@@ -320,8 +328,10 @@ void D_Display (void)
 	} while (tics <= 0);
         
 	wipestart = nowtime;
+    DOOMCLI_READ_INPUT();
 	done = wipe_ScreenWipe(wipe_Melt
 			       , 0, 0, SCREENWIDTH, SCREENHEIGHT, tics);
+    DOOMCLI_READ_INPUT();
 	I_UpdateNoBlit ();
 	M_Drawer ();                            // menu is drawn even on top of wipes
 	I_FinishUpdate ();                      // page flip or blit buffer
@@ -404,6 +414,7 @@ boolean D_GrabMouseCallback(void)
 
 void doomgeneric_Tick()
 {
+//printf("--------------------------------------------------\n");
     // frame syncronous IO operations
     I_StartFrame ();
 

@@ -87,16 +87,16 @@
 #define AM_NUMMARKPOINTS 10
 
 // scale on entry
-#define INITSCALEMTOF (.2*FRACUNIT)
+#define INITSCALEMTOF (2*FRACUNIT/10)
 // how much the automap moves window per tic in frame-buffer coordinates
 // moves 140 pixels in 1 second
 #define F_PANINC	4
 // how much zoom-in per tic
 // goes to 2x in 1 second
-#define M_ZOOMIN        ((int) (1.02*FRACUNIT))
+#define M_ZOOMIN        ((int) (102*FRACUNIT/100))
 // how much zoom-out per tic
 // pulls out to 0.5x in 1 second
-#define M_ZOOMOUT       ((int) (FRACUNIT/1.02))
+#define M_ZOOMOUT       ((int) (FRACUNIT*100/102))
 
 // translates between frame-buffer and map distances
 #define FTOM(x) FixedMul(((x)<<16),scale_ftom)
@@ -175,17 +175,17 @@ mline_t cheat_player_arrow[] = {
 
 #define R (FRACUNIT)
 mline_t triangle_guy[] = {
-    { { (fixed_t)(-.867*R), (fixed_t)(-.5*R) }, { (fixed_t)(.867*R ), (fixed_t)(-.5*R) } },
-    { { (fixed_t)(.867*R ), (fixed_t)(-.5*R) }, { (fixed_t)(0      ), (fixed_t)(R    ) } },
-    { { (fixed_t)(0      ), (fixed_t)(R    ) }, { (fixed_t)(-.867*R), (fixed_t)(-.5*R) } }
+    { { (fixed_t)(-867*R/1000), (fixed_t)(-5*R/10) }, { (fixed_t)( 867*R/1000), (fixed_t)(-5*R/10) } },
+    { { (fixed_t)( 867*R/1000), (fixed_t)(-5*R/10) }, { (fixed_t)(0          ), (fixed_t)(R      ) } },
+    { { (fixed_t)( 0         ), (fixed_t)(R      ) }, { (fixed_t)(-867*R/1000), (fixed_t)(-5*R/10) } }
 };
 #undef R
 
 #define R (FRACUNIT)
 mline_t thintriangle_guy[] = {
-    { { (fixed_t)(-.5*R), (fixed_t)(-.7*R) }, { (fixed_t)(R    ), (fixed_t)(0    ) } },
-    { { (fixed_t)(R    ), (fixed_t)(0    ) }, { (fixed_t)(-.5*R), (fixed_t)(.7*R ) } },
-    { { (fixed_t)(-.5*R), (fixed_t)(.7*R ) }, { (fixed_t)(-.5*R), (fixed_t)(-.7*R) } }
+    { { (fixed_t)(-5*R/10), (fixed_t)(-7*R/10) }, { (fixed_t)(R      ), (fixed_t)(0      ) } },
+    { { (fixed_t)(R      ), (fixed_t)(0      ) }, { (fixed_t)(-5*R/10), (fixed_t)( 7*R/10) } },
+    { { (fixed_t)(-5*R/10), (fixed_t)(7*R/10 ) }, { (fixed_t)(-5*R/10), (fixed_t)(-7*R/10) } }
 };
 #undef R
 
@@ -526,7 +526,7 @@ void AM_LevelInit(void)
     AM_clearMarks();
 
     AM_findMinMaxBoundaries();
-    scale_mtof = FixedDiv(min_scale_mtof, (int) (0.7*FRACUNIT));
+    scale_mtof = FixedDiv(min_scale_mtof, (int) (7*FRACUNIT/10));
     if (scale_mtof > max_scale_mtof)
 	scale_mtof = min_scale_mtof;
     scale_ftom = FixedDiv(FRACUNIT, scale_mtof);

@@ -862,30 +862,36 @@ void R_SetupFrame (player_t* player)
 //
 void R_RenderPlayerView (player_t* player)
 {	
+    DOOMCLI_READ_INPUT();
     R_SetupFrame (player);
 
     // Clear buffers.
+    DOOMCLI_READ_INPUT();
     R_ClearClipSegs ();
     R_ClearDrawSegs ();
     R_ClearPlanes ();
     R_ClearSprites ();
     
     // check for new console commands.
+    DOOMCLI_READ_INPUT();
     NetUpdate ();
 
     // The head node is the last node output.
     R_RenderBSPNode (numnodes-1);
     
     // Check for new console commands.
+    DOOMCLI_READ_INPUT();
     NetUpdate ();
     
     R_DrawPlanes ();
     
     // Check for new console commands.
+    DOOMCLI_READ_INPUT();
     NetUpdate ();
     
     R_DrawMasked ();
 
     // Check for new console commands.
+    DOOMCLI_READ_INPUT();
     NetUpdate ();				
 }

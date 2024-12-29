@@ -19,7 +19,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <math.h>
+//#include <math.h>
 
 #include "doomdef.h" 
 #include "doomkeys.h"
@@ -2251,18 +2251,21 @@ boolean G_CheckDemoStatus (void)
 	 
     if (timingdemo) 
     { 
-        float fps;
+        //float fps;
+        int fps;
         int realtics;
 
 	endtime = I_GetTime (); 
         realtics = endtime - starttime;
-        fps = ((float) gametic * TICRATE) / realtics;
+        //fps = ((float) gametic * TICRATE) / realtics;
+        fps = ((int) gametic * TICRATE) / realtics;
 
         // Prevent recursive calls
         timingdemo = false;
         demoplayback = false;
 
-	I_Error ("timed %i gametics in %i realtics (%f fps)",
+	//I_Error ("timed %i gametics in %i realtics (%f fps)",
+	I_Error ("timed %i gametics in %i realtics (%i fps)",
                  gametic, realtics, fps);
     } 
 	 

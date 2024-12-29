@@ -206,6 +206,8 @@ void NetUpdate (void)
     int newtics;
     int	i;
 
+    DOOMCLI_READ_INPUT();
+
     // If we are running with singletics (timing a demo), this
     // is all done separately.
 

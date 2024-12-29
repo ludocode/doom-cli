@@ -62,9 +62,7 @@
 
 #include <inttypes.h>
 
-#ifdef __cplusplus
-
-// Use builtin bool type with C++.
+#if defined(__cplusplus) || defined(__bool_true_false_are_defined)
 
 typedef bool boolean;
 
@@ -98,6 +96,21 @@ typedef uint8_t byte;
 #endif
 
 #define arrlen(array) (sizeof(array) / sizeof(*array))
+
+#ifdef DOOM_CLI
+    void doomcli_read_input(void);
+    #if 0
+        uint32_t DG_GetTicksMs(void);
+        #define DOOMCLI_READ_INPUT() do { \
+            printf("DOOMCLI_READ_INPUT  %s:%i  %s()  %i\n", __FILE__,__LINE__,__func__,DG_GetTicksMs()); \
+            doomcli_read_input(); \
+        } while (0)
+    #else
+        #define DOOMCLI_READ_INPUT() doomcli_read_input()
+    #endif
+#else
+    #define DOOMCLI_READ_INPUT() /*nothing*/
+#endif
 
 #endif
 
