@@ -93,6 +93,7 @@ SRC_DOOM="
     i_video
     doomgeneric
     doomgeneric_cli
+    cli_data
 "
 
 if [ "$1" = "clean" ]; then
